@@ -1,5 +1,4 @@
 <?php
-// Enable error reporting for debugging
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -10,7 +9,6 @@ if($data) {
     $id = (int)$data['post_id'] ?? 0;
     $action = (int)$data['action'] ?? 0;
     
-    // Debug: Output column information
     $columns_query = "SHOW COLUMNS FROM posts";
     $columns_result = $db->query(query: $columns_query);
     if ($columns_result !== false) {
@@ -22,13 +20,11 @@ if($data) {
         echo "<!-- Error fetching columns -->";
     }
     
-    // First try with post_id
     $query = "SELECT rate FROM posts WHERE post_id = ? LIMIT 1";
     $result = $db->query(query: $query, params: [$id]);
     
     if ($result === false) {
         echo "<!-- Query failed: $query -->";
-        // If that fails, try with id
         $query = "SELECT rate FROM posts WHERE id = ? LIMIT 1";
         $result = $db->query(query: $query, params: [$id]);
         if ($result === false) {
@@ -36,13 +32,11 @@ if($data) {
         }
     }
     
-    // Initialize rate at 0 if query fails
     if ($result === false) {
         echo "<!-- Both queries failed, setting rate to 0 -->";
         $rate = 0;
     } else {
         $rate = $result->getColumn();
-        // Handle NULL value
         if ($rate === false || $rate === null) {
             echo "<!-- getColumn returned false or null -->";
             $rate = 0;
@@ -51,12 +45,10 @@ if($data) {
         }
     }
     
-    // Convert to integer and add action
     $rate = (int)$rate;
     $rate += $action;
     echo "<!-- New rate after adding action: $rate -->";
     
-    // Try update first with post_id
     $updateQuery = "UPDATE `posts` SET `rate` = ? WHERE `post_id` = ?";
     $updateResult = $db->query(query: $updateQuery, params: [$rate, $id]);
     
@@ -67,7 +59,6 @@ if($data) {
         echo "<!-- Rows affected: $rowCount -->";
     }
     
-    // If that doesn't affect any rows, try with id
     if ($updateResult === false || $db->rowCount() === 0) {
         $updateQuery = "UPDATE `posts` SET `rate` = ? WHERE `id` = ?";
         $updateResult = $db->query(query: $updateQuery, params: [$rate, $id]);
@@ -80,7 +71,6 @@ if($data) {
         }
     }
     
-    // Echo the new rate if update was successful
     if ($updateResult !== false && $db->rowCount() > 0) {
         echo $rate;
     } else {

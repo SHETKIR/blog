@@ -1,6 +1,8 @@
 <?php
+global $db;
 
 $id = (int)$_GET['id'] ?? 0;
+
 $sql = "SELECT * FROM `posts` WHERE `id` = ?";
 $result = $db->query(query: $sql, params: [$id]);
 
@@ -14,8 +16,7 @@ if (isset($post['id'])) {
     $post['post_id'] = $post['id'];
 }
 
-$title = "POST TITLE";
-$header = $post['title'];
+$title = "Edit Post";
+$header = "Edit Post: {$post['title']}";
 
-
-require_once VIEWS.'/post.tmpl.php'; 
+require_once VIEWS.'/posts/edit.tmpl.php'; 

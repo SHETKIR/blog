@@ -20,7 +20,9 @@
                 
                 <p><?= $post['content'] ?></p>
                 
-                <div class="mt-4">
+                <div class="mt-4 d-flex gap-2">
+                    <a href="/posts/edit?id=<?= isset($post['id']) ? $post['id'] : $post['post_id'] ?>" class="btn btn-primary">Edit Post</a>
+                    
                     <form action="/delete-post" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
                         <input type="hidden" name="id" value="<?= isset($post['id']) ? $post['id'] : $post['post_id'] ?>">
                         <button type="submit" class="btn btn-danger">Delete Post</button>

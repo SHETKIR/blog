@@ -16,12 +16,10 @@ class Validator {
     ];
     
     public function validate($data = [], $rules = []): static {
-        // Validate data
         $this->data_items = $data;
         
         foreach ($data as $fieldname => $value) {
             if(in_array($fieldname, array_keys($rules))) {
-                //Rule processing area
                 $this->checkValidator([
                     'fieldname' => $fieldname,
                     'value' => $value,
@@ -34,7 +32,6 @@ class Validator {
     }
     
     protected function checkValidator($field): void {
-        // Functionality
         foreach($field['rules'] as $rule => $ruleValue) {
             if(in_array($rule, $this->validatorList)) {
                 $isValid = call_user_func_array(callback: [$this, $rule], args: [$field['value'], $ruleValue]);
@@ -74,7 +71,6 @@ class Validator {
         return $errorsList;
     }
     
-    //Other - вспомогательные подсказки
     
     protected function required($value, $rulevalue): bool {
         return !empty($value);

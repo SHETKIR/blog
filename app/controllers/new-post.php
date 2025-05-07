@@ -24,10 +24,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $validator = new Validator();
     
     if(!$validator->validate(data: $data, rules: $rules)->hasErrors()) {
-        // Generate a unique slug - handle case when posts table might be empty
-        $slug = 'post-'.time(); // Default fallback using timestamp
+        $slug = 'post-'.time();
         
-        // Try to get the latest post_id if posts table exists and has records
         $sql = "SELECT `post_id` FROM `posts` ORDER BY `post_id` DESC LIMIT 1";
         $result = $db->query(query: $sql);
         if($result !== false) {

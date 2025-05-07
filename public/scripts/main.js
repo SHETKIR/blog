@@ -36,7 +36,6 @@ function change_rate_fetch(e) {
         .then((rate) => {
             const rate_p = document.getElementById('rate_p');
             if (rate_p) {
-                // Add appropriate text before the rate
                 rate_p.innerHTML = 'Rate: ' + rate;
             }
         })

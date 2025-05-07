@@ -20,7 +20,6 @@
                             </div>
                         <?php endforeach; ?>
                         
-                        <!-- Pagination -->
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <li class="page-item <?= ($paginator->page <= 1) ? 'disabled' : '' ?>">

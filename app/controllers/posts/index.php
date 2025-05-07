@@ -1,17 +1,14 @@
 <?php
-// Enable error reporting for debugging
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 $title = "BLOG P21";
 $header = "Recent Posts";
 
-// Initialize variables
 $per_page = 5;
 $posts = [];
 $total = 0;
 
-// Check if we can get a count from the posts table
 try {
     $total = $db->query(query: "SELECT count(*) FROM posts")->getColumn();
     if ($total === false) {
@@ -23,7 +20,6 @@ try {
     $total = 0;
 }
 
-// Create paginator instance
 require_once CLASSES . '/Paginator.php';
 $paginator = new Paginator(
     page: isset($_GET['page']) ? (int)$_GET['page'] : 1,
@@ -31,7 +27,6 @@ $paginator = new Paginator(
     total: $total
 );
 
-// Ensure page is within valid range
 if($paginator->page < 1) {
     $paginator->page = 1;
 }
@@ -41,9 +36,7 @@ else if($paginator->page > $paginator->pages_count) {
 
 $start_elem = ($paginator->page - 1) * $paginator->per_page;
 
-// Try multiple column names for compatibility
 try {
-    // Check which column exists first
     $columns = $db->query("SHOW COLUMNS FROM posts")->findAll();
     $has_post_id = false;
     $has_id = false;
@@ -57,7 +50,6 @@ try {
         }
     }
     
-    // Use the appropriate column for ordering
     if ($has_post_id) {
         $sql = "SELECT * FROM posts ORDER BY post_id DESC LIMIT $start_elem, $per_page";
     } elseif ($has_id) {

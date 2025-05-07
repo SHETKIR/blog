@@ -60,7 +60,6 @@ html, body {
     text-decoration: underline;
 }
 
-/* Make sure the text in the navbar is visible on black background */
 .navbar-expand-lg .navbar-nav .nav-link {
     color: white;
 }

@@ -1,16 +1,13 @@
 <?php
-// Database check script
 
 require_once 'config/config.php';
 require_once CORE . '/db.php';
 
-// Check if the rate column exists in posts table
 $sql = "SHOW COLUMNS FROM `posts` LIKE 'rate'";
 $result = $db->query($sql);
 $column_exists = $result !== false && $result->find();
 
 if (!$column_exists) {
-    // Add rate column to posts table
     $sql = "ALTER TABLE `posts` ADD COLUMN `rate` INT DEFAULT 0";
     
     if ($db->query($sql) !== false) {
@@ -21,7 +18,6 @@ if (!$column_exists) {
         echo "<p>Failed to add 'rate' column to the 'posts' table.</p>";
     }
 } else {
-    // Check the current definition of the rate column
     $sql = "SHOW CREATE TABLE `posts`";
     $result = $db->query($sql);
     $table_def = $result !== false ? $result->find() : false;
@@ -32,7 +28,6 @@ if (!$column_exists) {
         echo "<pre>" . print_r($table_def, true) . "</pre>";
     }
     
-    // Get the current values in the posts table
     $sql = "SELECT `id`, `title`, `rate` FROM `posts` LIMIT 10";
     $result = $db->query($sql);
     $posts = $result !== false ? $result->findAll() : [];
@@ -51,7 +46,6 @@ if (!$column_exists) {
     
     echo "</table>";
     
-    // Try to update the rate column for a post
     if (!empty($posts)) {
         $first_post_id = $posts[0]['id'];
         $current_rate = isset($posts[0]['rate']) ? (int)$posts[0]['rate'] : 0;
@@ -60,7 +54,6 @@ if (!$column_exists) {
         $sql = "UPDATE `posts` SET `rate` = {$new_rate} WHERE `id` = {$first_post_id}";
         
         if ($db->query($sql) !== false) {
-            // Verify the update
             $sql = "SELECT `rate` FROM `posts` WHERE `id` = {$first_post_id}";
             $result = $db->query($sql);
             $updated_post = $result !== false ? $result->find() : false;

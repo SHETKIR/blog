@@ -3,7 +3,7 @@
 global $db;
 
 $data = file_get_contents(filename: "php://input");
-$api_data = json_decode(json: $data, associative: true);//NULL | array
+$api_data = json_decode(json: $data, associative: true);
 $data = $api_data ?? $_POST;
 $id = (int)$data['id'] ?? 0;
 

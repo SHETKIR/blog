@@ -9,17 +9,14 @@ if ($id <= 0) {
     redirect(url: '/');
 }
 
-// Debug: Output the post ID
 $_SESSION['debug'] = "Attempting to downvote post ID: " . $id;
 
-// Use the exact column name (id) as shown in the database screenshot
 $sql = "UPDATE `posts` SET `rate` = `rate` - 1 WHERE `id` = ?";
 $update = $db->query($sql, [$id]);
 
 if ($update !== false && $db->rowCount() > 0) {
     $_SESSION['success'] = "Post downvoted successfully";
 } else {
-    // Check if the post exists
     $check_sql = "SELECT * FROM `posts` WHERE `id` = ?";
     $check_result = $db->query($check_sql, [$id]);
     
@@ -30,5 +27,4 @@ if ($update !== false && $db->rowCount() > 0) {
     }
 }
 
-// Redirect back to the post page
 redirect(url: '/post?id=' . $id); 

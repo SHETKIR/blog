@@ -6,11 +6,9 @@ class DB {
     private static $instance = null;
 
     private function __construct() {
-        // private constructor
     }
 
-    // private function __clone() {}
-    // public function __wakeup() {}
+    private function __clone() {}
 
     public static function getInstance(): DB {
         if(self::$instance == null) {

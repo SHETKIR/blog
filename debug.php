@@ -1,5 +1,4 @@
 <?php
-// Debug script - displays current routes and database info
 
 require_once 'config/config.php';
 require_once CORE . '/db.php';

@@ -23,7 +23,6 @@
                 </div>
                 <?php endforeach; ?>
                 
-                <!-- Pagination -->
                 <?php if(isset($paginator) && $paginator->pages_count > 1): ?>
                 <nav aria-label="Page navigation">
                     <ul class="pagination">

@@ -2,7 +2,6 @@
 
 global $db;
 
-// Start debug collection
 $debug_info = [];
 $debug_info[] = "Starting upvote process";
 
@@ -14,7 +13,6 @@ if ($id <= 0) {
     redirect(url: '/');
 }
 
-// Check if post exists and current rate
 $sql = "SELECT * FROM `posts` WHERE `id` = ?";
 $result = $db->query($sql, [$id]);
 $post = $result !== false ? $result->find() : false;
@@ -28,7 +26,7 @@ if (!$post) {
 
 $debug_info[] = "Post exists. Current data: " . json_encode($post);
 
-// Direct update approach
+
 $sql = "UPDATE `posts` SET `rate` = `rate` + 1 WHERE `id` = ?";
 $update = $db->query($sql, [$id]);
 
@@ -40,7 +38,6 @@ if ($update !== false) {
     $debug_info[] = "Rows affected: " . $rowCount;
     
     if ($rowCount > 0) {
-        // Verify the update
         $verify_sql = "SELECT `rate` FROM `posts` WHERE `id` = ?";
         $verify_result = $db->query($verify_sql, [$id]);
         $updated_post = $verify_result !== false ? $verify_result->find() : false;
@@ -61,8 +58,6 @@ if ($update !== false) {
     $_SESSION['error'] = "Failed to upvote post - database error";
 }
 
-// Store debug info
 $_SESSION['debug'] = implode("<br>", $debug_info);
 
-// Redirect back to the post page
 redirect(url: '/post?id=' . $id); 
