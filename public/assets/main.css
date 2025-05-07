@@ -1,0 +1,74 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    flex: 1 1 auto;
+    padding: 30px 0;
+}
+
+.footer {
+    margin-top: auto;
+    background-color: #212529;
+    color: white;
+    width: 100%;
+    border-top: 1px solid #343a40;
+}
+
+.text-bg-dark {
+    padding: 15px 0;
+}
+
+.card {
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.card-title a {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+.card-title a:hover {
+    text-decoration: underline;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.list-group-item a {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+.list-group-item a:hover {
+    text-decoration: underline;
+}
+
+/* Make sure the text in the navbar is visible on black background */
+.navbar-expand-lg .navbar-nav .nav-link {
+    color: white;
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+} 
